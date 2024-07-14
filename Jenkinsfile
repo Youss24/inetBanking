@@ -1,35 +1,36 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven' // Le nom de l'installation de Maven configurée dans Jenkins
+    }
+    
     stages {
         stage('Build') {
             steps {
-                echo 'Building the application.........'
-                bat "mvn clean"
+                script {
+                    def mvnHome = tool 'Maven'
+                    sh "'${mvnHome}/bin/mvn' clean"
+                }
             }
         }
         
-                stage('Test') {
+        stage('Test') {
             steps {
-                echo 'Testing...'
-                bat "mvn test"
+                echo 'Testing the project....'
             }
         }
         
-                stage('Compile') {
+        stage('Deploy') {
             steps {
-                echo 'Compiling...'
-                bat "mvn compile"
+                echo 'Deploying the project....'
             }
         }
-
-                stage('Deploy') {
+        
+        stage('Release') {
             steps {
-                echo 'Depoloying...'
+                echo 'Releasing the project....'
             }
         }
-        
-        
     }
-
 }
