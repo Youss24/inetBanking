@@ -5,34 +5,31 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the application.........'
+                bat "mvn clean"
             }
         }
         
                 stage('Test') {
             steps {
                 echo 'Testing...'
+                bat "mvn test"
             }
         }
         
+                stage('Compile') {
+            steps {
+                echo 'Compiling...'
+                bat "mvn compile"
+            }
+        }
+
                 stage('Deploy') {
             steps {
-                echo 'Deploying...'
+                echo 'Depoloying...'
             }
         }
         
-                stage('Release') {
-            steps {
-                echo 'Releasing...'
-            }
-        }
         
     }
-    
-    post 
-    {
-        failure
-        {
-            emailext body: 'Summary of Pipeline statuts', subject: 'Pipeline Statuts', to: 'youssef.aitelhaj@outlook.com'
-        }
-    }
+
 }
